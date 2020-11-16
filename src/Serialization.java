@@ -4,9 +4,7 @@ import com.google.gson.annotations.Expose;
 import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -18,11 +16,55 @@ public class Serialization {
 
         Serialization gSonTrial = new Serialization();
 
-//        gSonTrial.basicType();
+//        gSonTrial.basicType();//基本类型
+//        gSonTrial.arrayType();//数组
+        gSonTrial.collectionType();//容器
 
 
 //        gSonTrial.javaToJson();
-        gSonTrial.javaToJsonWithCustom();
+//        gSonTrial.javaToJsonWithCustom();
+
+    }
+
+    private void collectionType() {
+
+        //List容器
+//        Gson gson = new Gson();
+//        List<String> strings = Arrays.asList("one", "two", "three");
+//        System.out.println(gson.toJson(strings));
+
+
+        //Set容器
+        Gson gson = new Gson();
+        Set<String> strings = new HashSet<>();
+        strings.add("one");
+        strings.add("two");
+        strings.add("three");
+
+        System.out.println(gson.toJson(strings));
+
+
+
+        //Map容器
+//        Gson gson = new Gson();
+//        Map<String, Integer> map = new HashMap<>();
+//        map.put("one", 111);
+//        map.put("two", 222);
+//        map.put("three", 333);
+//
+//        System.out.println(gson.toJson(map));
+
+
+
+
+
+    }
+
+    private void arrayType() {
+
+        Gson gson = new Gson();
+        int[] values = {1, 2, 4};
+        System.out.println(gson.toJson(values));
 
     }
 
@@ -50,7 +92,6 @@ public class Serialization {
             System.out.println(serializedMovie);
 
 
-
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -73,22 +114,21 @@ public class Serialization {
             System.out.println(serializedMovie);
 
 
-
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
 
     private void basicType() {
-        Gson gson = new Gson();
-        System.out.println(gson.toJson(1));
-        System.out.println(gson.toJson("abcd"));
-        System.out.println(gson.toJson(1L));
-        int[] values = { 1 };
-        System.out.println(gson.toJson(values));
+
+//        Gson gson = new Gson();
+//        System.out.println(gson.toJson(1));
+//        System.out.println(gson.toJson("abcd"));
+//        System.out.println(gson.toJson(1L));
+//        System.out.println(gson.toJson(1.0f));
+//        System.out.println(gson.toJson(3.1415926d));
+
     }
-
-
 
 
     private class ActorGsonSerializer implements JsonSerializer<ActorGson> {
@@ -102,8 +142,6 @@ public class Serialization {
             System.out.println("jsonSerializationContext is " + jsonSerializationContext);
 
 
-
-
             JsonObject actorJsonObj = new JsonObject();
 
             actorJsonObj.addProperty("<strong>IMDB Code</strong>", actor.imdbId);
@@ -112,7 +150,7 @@ public class Serialization {
                     actor.dateOfBirth != null ? sdf.format(actor.dateOfBirth) : null);
 
             actorJsonObj.addProperty("<strong>N° Film:</strong> ",
-                    actor.filmography  != null ? actor.filmography.size() : null);
+                    actor.filmography != null ? actor.filmography.size() : null);
 
             actorJsonObj.addProperty("filmography",
                     actor.filmography != null ? convertFilmography(actor.filmography) : null);

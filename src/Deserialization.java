@@ -1,5 +1,8 @@
 import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -17,20 +20,148 @@ public class Deserialization {
 
 
 //        deserialization.basicType();
+        deserialization.arrayType();
+//        deserialization.collectionType();
+//        deserialization.dateType();
+//        deserialization.jsonDeserializer();
 //        deserialization.jsonToJava();
 //        deserialization.jsonToJavaWithCustom();
 
-        deserialization.getZone();
+//        deserialization.getZone();
 
+    }
 
-//        double[][] coordinate = new double[][]{{11d, 12d}, {14d, 15d}};
+    private void jsonDeserializer() {
+
+        //方式一：使用解析器
+//        Gson gson = new GsonBuilder()
+//                .registerTypeAdapter(List.class, new JsonDeserializer<List>(){
+//                    @Override
+//                    public List deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+//                        System.out.println("~~deserialize~~");
+//                        System.out.println("json is " + json);
+//                        System.out.println("typeOfT is " + typeOfT);
+//                        System.out.println("context is " + context);
 //
+//                        JsonArray jsonArray = json.getAsJsonArray();
+//                        for (JsonElement jsonElement : jsonArray) {
+//                            System.out.println(jsonElement);
+//                        }
+//
+//                        int i = jsonArray.get(0).getAsInt();
+//                        String s = jsonArray.get(1).getAsString();
+//
+//
+//                        Map<String , Integer> map = new HashMap<>();
+//                        JsonObject jsonObject = jsonArray.get(2).getAsJsonObject();
+//                        map.put("one", jsonObject.get("one").getAsInt());
+//                        map.put("two", jsonObject.get("two").getAsInt());
+//                        map.put("three", jsonObject.get("three").getAsInt());
+//
+//
+//
+//                        return Arrays.asList(i, s, map);
+//                    }
+//                })
+//                .create();
+
+
+        //方式二：直接解析
+        Gson gson = new Gson();
+
+        String json = "" +
+                "[\n" +
+                "\t12,\n" +
+                "\t\"abcd\",\n" +
+                "\t{\"one\": 111, \"two\": 22, \"three\": 3}\n" +
+                "]\n";
+
+        List list = gson.fromJson(json, List.class);
+
+        System.out.println(list);
+
+
+    }
+
+    private void dateType() {
+
+        //方式一
+        Gson gson = new Gson();
+        Date date = gson.fromJson("\"2020-09-21\"", Date.class);
+        System.out.println(date);
+
+
+        //方式二：使用解析器
+//        Gson gson = new GsonBuilder()
+//                .registerTypeAdapter(Date.class, new JsonDeserializer<Date>(){
+//                    @Override
+//                    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+//                        System.out.println("~~deserialize~~");
+//                        System.out.println("json is " + json);
+//                        System.out.println("typeOfT is " + typeOfT);
+//                        System.out.println("context is " + context);
+//
+//                        String s = json.getAsString();
+//                        System.out.println(s);
+//
+//                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                        Date date = null;
+//                        try {
+//                            date = sdf.parse(s);
+//                        } catch (ParseException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        return date;
+//                    }
+//                })
+//                .create();
+//
+//        Date date = gson.fromJson("\"2020-09-15 15:05:35\"", Date.class);
+//        System.out.println(date);
+
+
+    }
+
+    private void arrayType() {
+
+        //解析JSON数组
 //        Gson gson = new Gson();
-////        System.out.println(gson.toJson(coordinate));
-//
-//        String js = "[[11.0,12.0],[14.0,15.0]]";
-//        double[][] coordinate1 = gson.fromJson(js, double[][].class);
-//        System.out.println(coordinate1[0][1]);
+//        String[] strings = gson.fromJson("[\"aa\", \"bb\", \"cc\"]", String[].class);
+//        Arrays.stream(strings).forEach(System.out::println);
+
+
+
+
+        //解析JSON二维数组
+        double[][] coordinate = new double[2][3];
+        Gson gson = new Gson();
+
+        String json = "[[11.0,12.0],[14.0,15.0]]";
+        coordinate = gson.fromJson(json, double[][].class);
+        Arrays.stream(coordinate).forEach(System.out::println);
+
+    }
+
+    private void collectionType() {
+
+        //解析List
+//        Gson gson = new Gson();
+//        List<String> strings = gson.fromJson("[\"aa\", \"bb\", \"cc\"]", List.class);
+//        for (String s : strings) System.out.println("s is " + s);
+
+
+        //解析Set
+//        Gson gson = new Gson();
+//        Set<String> strings = gson.fromJson("[\"aa\", \"bb\", \"cc\"]", Set.class);
+//        for (String s : strings) System.out.println("s is " + s);
+
+
+        //解析Map
+        Gson gson = new Gson();
+        Map<String, Integer> map = gson.fromJson("{\"one\": 111, \"two\": 22, \"three\": 3}", Map.class);
+        System.out.println(map);
+
 
 
     }
@@ -66,10 +197,26 @@ public class Deserialization {
     private void jsonToJava() {
 
 
-        String json = "{\"imdbId\":\"tt0472043\",\"director\":\"Mel Gibson\",\"actors\":[{\"imdbId\":\"nm2199632\",\"dateOfBirth\":\"Sep 21, 1982, 12:00:00 AM\",\"filmography\":[\"Apocalypto\",\"Beatdown\",\"Wind Walkers\"]}]}";
+
+        String json = "" +
+                "{\n" +
+                "   \"imdbId\":\"tt0472043\",\n" +
+                "   \"director\":\"Mel Gibson\",\n" +
+                "   \"actors\":[\n" +
+                "      {\n" +
+                "         \"imdbId\":\"nm2199632\",\n" +
+                "         \"dateOfBirth\":\"Sep 21, 1982, 12:00:00 AM\",\n" +
+                "         \"filmography\":[\n" +
+                "            \"Apocalypto\",\n" +
+                "            \"Beatdown\",\n" +
+                "            \"Wind Walkers\"\n" +
+                "         ]\n" +
+                "      }\n" +
+                "   ]\n" +
+                "}";
 
         Movie movie = new Gson().fromJson(json, Movie.class);
-        movie.toString();
+        System.out.println(movie.toString());
 
 
     }
@@ -83,11 +230,6 @@ public class Deserialization {
         System.out.println(gson.fromJson("1", Long.class));
         System.out.println(gson.fromJson("false", Boolean.class));
         System.out.println(gson.fromJson("\"abc\"", String.class));
-        System.out.println(gson.fromJson("[\"aa\"]", String.class));
-
-        String[] anotherStr = gson.fromJson("[\"abc\", \"efg\"]", String[].class);
-        Arrays.stream(anotherStr).forEach(System.out::println);
-
     }
 
 
