@@ -18,7 +18,7 @@ public class Serialization {
 
 //        gSonTrial.basicType();//基本类型
 //        gSonTrial.arrayType();//数组
-        gSonTrial.collectionType();//容器
+//        gSonTrial.collectionType();//容器
 
 
 //        gSonTrial.javaToJson();

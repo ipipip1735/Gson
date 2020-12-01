@@ -15,4 +15,13 @@ public class ActorGson {
         this.dateOfBirth = dateOfBirth;
         this.filmography = filmography;
     }
+
+    @Override
+    public String toString() {
+        return "ActorGson{" +
+                "imdbId='" + imdbId + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", filmography=" + filmography +
+                '}';
+    }
 }

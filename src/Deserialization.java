@@ -20,14 +20,12 @@ public class Deserialization {
 
 
 //        deserialization.basicType();
-        deserialization.arrayType();
+//        deserialization.arrayType();
 //        deserialization.collectionType();
 //        deserialization.dateType();
 //        deserialization.jsonDeserializer();
 //        deserialization.jsonToJava();
 //        deserialization.jsonToJavaWithCustom();
-
-//        deserialization.getZone();
 
     }
 
@@ -166,20 +164,6 @@ public class Deserialization {
 
     }
 
-    private void getZone() {
-
-        String json = "{\"id\": \"402881ee74d22f740174d3e77d4900c1\", \"createTime\": \"2020-10-27\", \"speed\": 5.0, \"flyTaskName\": \"0927-联调测试_街区01_网格2_2期\", \"flyHeight\": 100.0, \"lineOverlap\": 0.0, \"headingOverlap\": 0.8, \"rotatePitch\": 90.0, \"coordinate\": \"[[[114.32088898169646,30.57943507796134],[114.32614565154965,30.578803621520315],[114.32582582296264,30.576966657328242],[114.3199048937364,30.578237770943293],[114.32088898169646,30.57943507796134]]]\", \"wayPointList\": [{\"id\": \"402881ee74d22f740174d3e77d4a00c2\", \"order\": 1, \"latitude\": 30.57702304651146, \"longitude\": 114.3255631585092 }, {\"id\": \"402881ee74d22f740174d3e77d4a00c3\", \"order\": 2, \"latitude\": 30.578875819096854, \"longitude\": 114.32554463016572 }, {\"id\": \"402881ee74d22f740174d3e77d4a00c4\", \"order\": 3, \"latitude\": 30.578948016673394, \"longitude\": 114.32494360878181 }, {\"id\": \"402881ee74d22f740174d3e77d4a00c5\", \"order\": 4, \"latitude\": 30.57715219691913, \"longitude\": 114.32496156757799 }, {\"id\": \"402881ee74d22f740174d3e77d4a00c6\", \"order\": 5, \"latitude\": 30.5772813473268, \"longitude\": 114.32435997664678 }, {\"id\": \"402881ee74d22f740174d3e77d4a00c7\", \"order\": 6, \"latitude\": 30.579020214249933, \"longitude\": 114.3243425873979 }, {\"id\": \"402881ee74d22f740174d3e77d4a00c8\", \"order\": 7, \"latitude\": 30.579092411826473, \"longitude\": 114.32374156601398 }, {\"id\": \"402881ee74d22f740174d3e77d4a00c9\", \"order\": 8, \"latitude\": 30.577410497734473, \"longitude\": 114.32375838571555 }, {\"id\": \"402881ee74d22f740174d3e77d4a00ca\", \"order\": 9, \"latitude\": 30.57753964814215, \"longitude\": 114.32315679478434 }, {\"id\": \"402881ee74d22f740174d3e77d4a00cb\", \"order\": 10, \"latitude\": 30.579164609403016, \"longitude\": 114.32314054463006 }, {\"id\": \"402881ee74d22f740174d3e77d4a00cc\", \"order\": 11, \"latitude\": 30.579236806979555, \"longitude\": 114.32253952324612 }, {\"id\": \"402881ee74d22f740174d3e77d4a00cd\", \"order\": 12, \"latitude\": 30.577668798549816, \"longitude\": 114.32255520385311 }, {\"id\": \"402881ee74d22f740174d3e77d4a00ce\", \"order\": 13, \"latitude\": 30.57779794895749, \"longitude\": 114.32195361292189 }, {\"id\": \"402881ee74d22f740174d3e77d4a00cf\", \"order\": 14, \"latitude\": 30.579309004556094, \"longitude\": 114.3219385018622 }, {\"id\": \"402881ee74d22f740174d3e77d4a00d0\", \"order\": 15, \"latitude\": 30.579381202132637, \"longitude\": 114.3213374804783 }, {\"id\": \"402881ee74d22f740174d3e77d4a00d1\", \"order\": 16, \"latitude\": 30.57792709936516, \"longitude\": 114.32135202199069 }, {\"id\": \"402881ee74d22f740174d3e77d4a00d2\", \"order\": 17, \"latitude\": 30.57805624977283, \"longitude\": 114.32075043105948 }, {\"id\": \"402881ee74d22f740174d3e77d4a00d3\", \"order\": 18, \"latitude\": 30.57925195973024, \"longitude\": 114.3207384735613 }, {\"id\": \"402881ee74d22f740174d3e77d4a00d4\", \"order\": 19, \"latitude\": 30.57853037505251, \"longitude\": 114.32014539026454 }, {\"id\": \"402881ee74d22f740174d3e77d4a00d5\", \"order\": 20, \"latitude\": 30.5781854001805, \"longitude\": 114.32014884012825 }]}";
-
-        Gson gson = new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
-                .create();
-
-        Zone zone = gson.fromJson(json, Zone.class);
-
-        System.out.println(zone);
-
-    }
-
     private void jsonToJavaWithCustom() {
 
         String json = "{\"imdbId\":\"tt0472043\",\"director\":\"Mel Gibson\",\"actors\":[{\"imdbId\":\"nm2199632\",\"dateOfBirth\":\"Sep 21, 1982, 12:00:00 AM\",\"filmography\":[\"Apocalypto\",\"Beatdown\",\"Wind Walkers\"]}]}";
@@ -195,8 +179,6 @@ public class Deserialization {
     }
 
     private void jsonToJava() {
-
-
 
         String json = "" +
                 "{\n" +
@@ -217,7 +199,6 @@ public class Deserialization {
 
         Movie movie = new Gson().fromJson(json, Movie.class);
         System.out.println(movie.toString());
-
 
     }
 
@@ -240,37 +221,6 @@ public class Deserialization {
         @Override
         public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             return null;
-        }
-    }
-
-
-
-    private class WayPointListGsonDeserializer implements JsonDeserializer<WayPoint[]> {
-
-        @Override
-        public WayPoint[] deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-
-
-            JsonArray jsonArray = json.getAsJsonArray();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-
-                System.out.println(jsonArray.get(i));
-
-            }
-
-
-//            JsonElement jsonId = jsonArray.get("id");
-//
-//            JsonElement jsonDateOfBirth = jsonArray.get("dateOfBirth");
-//            JsonArray jsonFilmography = jsonArray.getAsJsonArray("filmography");
-
-
-            WayPoint[] wayPointLists = new WayPoint[]{new WayPoint()};
-
-
-
-            return wayPointLists;
         }
     }
 
