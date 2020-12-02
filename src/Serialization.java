@@ -22,7 +22,7 @@ public class Serialization {
 
 
 //        gSonTrial.javaToJson();
-//        gSonTrial.javaToJsonWithCustom();
+        gSonTrial.javaToJsonWithCustom();
 
     }
 
@@ -80,9 +80,9 @@ public class Serialization {
             Movie movie = new Movie("nm2199632", "Mel Gibson", Arrays.asList(actorGson));
 
             Gson gson = new GsonBuilder()
-                    .setPrettyPrinting()
-                    .excludeFieldsWithoutExposeAnnotation()
-                    .serializeNulls()
+//                    .setPrettyPrinting()
+//                    .excludeFieldsWithoutExposeAnnotation()
+//                    .serializeNulls()
                     .disableHtmlEscaping()
                     .registerTypeAdapter(ActorGson.class, new ActorGsonSerializer())
                     .create();
