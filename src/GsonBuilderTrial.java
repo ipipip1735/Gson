@@ -32,8 +32,26 @@ public class GsonBuilderTrial {
 //        gsonBuilderTrial.registerTypeAdapter();
 
 
+        gsonBuilderTrial.annotationWithserializedName();
+
+
 //        gsonBuilderTrial.writer();
-        gsonBuilderTrial.reader();
+//        gsonBuilderTrial.reader();
+
+
+
+    }
+
+    private void annotationWithserializedName() {
+
+        Cat cat = new Cat("Tom", 2);
+        Gson gson = new GsonBuilder().create();
+        String dataJson = gson.toJson(cat);
+        System.out.println("dataJson = " + dataJson);
+
+
+        cat = gson.fromJson(dataJson, Cat.class);
+        System.out.println(cat);
 
     }
 
