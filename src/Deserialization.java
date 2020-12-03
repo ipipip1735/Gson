@@ -18,17 +18,28 @@ public class Deserialization {
         Deserialization deserialization = new Deserialization();
 
 
-//        deserialization.basicType();
-//        deserialization.arrayType();
-//        deserialization.collectionType();
-//        deserialization.dateType();
-//        deserialization.jsonDeserializer();
-//        deserialization.jsonToJava();
-//        deserialization.jsonToJavaWithCustom();
+//        deserialization.basicType();//解析原始类型
+//        deserialization.arrayType();//解析数组
+//        deserialization.collectionType();//解析容器
+//        deserialization.dateType();//解析日期
+//        deserialization.jsonToJava();//解析Java对象
+
+//        deserialization.jsonToJavaWithDeserializer();//使用解析器
+//        deserialization.collectionTypeDeserializer();//使用解析器解析容器
+
+        deserialization.jsonToJavaWithInstanceCreator();//使用实例构建器
+
+
 
     }
 
-    private void jsonDeserializer() {
+    private void jsonToJavaWithInstanceCreator() {
+
+
+
+    }
+
+    private void collectionTypeDeserializer() {
 
         //方式一：使用解析器
 //        Gson gson = new GsonBuilder()
@@ -163,7 +174,7 @@ public class Deserialization {
 
     }
 
-    private void jsonToJavaWithCustom() {
+    private void jsonToJavaWithDeserializer() {
 
         String json = "{\"imdbId\":\"tt0472043\",\"director\":\"Mel Gibson\",\"actors\":[{\"imdbId\":\"nm2199632\",\"dateOfBirth\":\"Sep 21, 1982, 12:00:00 AM\",\"filmography\":[\"Apocalypto\",\"Beatdown\",\"Wind Walkers\"]}]}";
 

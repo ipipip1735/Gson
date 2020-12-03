@@ -28,7 +28,7 @@ public class GsonBuilderTrial {
 //        gsonBuilderTrial.excludeFieldsWithoutExposeAnnotation();
 //        gsonBuilderTrial.setVersion();
 //        gsonBuilderTrial.enableComplexMapKeySerialization();
-        gsonBuilderTrial.registerTypeAdapter();
+//        gsonBuilderTrial.registerTypeAdapter();
 
 //        gsonBuilderTrial.annotationWithSerializedName();
 //        gsonBuilderTrial.annotationWithJsonAdapter();
@@ -210,7 +210,7 @@ public class GsonBuilderTrial {
         Cattle cattle = new Cattle("Luck", 2);
 
         Gson gson = new GsonBuilder()
-                .setVersion(1.1)
+                .setVersion(1.2)
                 .create();
         String dataJson = gson.toJson(cattle);
         System.out.println("dataJson = " + dataJson);

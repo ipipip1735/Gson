@@ -23,7 +23,7 @@ public class Serialization {
 
 
 //        gSonTrial.javaToJson();
-        gSonTrial.javaToJsonWithCustom();
+        gSonTrial.javaToJsonWithSerializer();
 
     }
 
@@ -69,7 +69,7 @@ public class Serialization {
 
     }
 
-    private void javaToJsonWithCustom() {
+    private void javaToJsonWithSerializer() {
 
         try {
 
