@@ -1,3 +1,5 @@
+package entity;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -5,8 +7,8 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Cat {
     @SerializedName("x")
-    String cat_name;
-    int age;
+    public String cat_name;
+    public int age;
 
     public Cat(String name, int age) {
         this.cat_name = name;
@@ -15,7 +17,7 @@ public class Cat {
 
     @Override
     public String toString() {
-        return "Cat{" +
+        return "entity.Cat{" +
                 "cat_name='" + cat_name + '\'' +
                 ", age=" + age +
                 '}';

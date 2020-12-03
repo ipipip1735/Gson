@@ -1,16 +1,15 @@
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import entity.*;
 
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.time.Instant;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2020/12/1.
@@ -29,20 +28,30 @@ public class GsonBuilderTrial {
 //        gsonBuilderTrial.excludeFieldsWithoutExposeAnnotation();
 //        gsonBuilderTrial.setVersion();
 //        gsonBuilderTrial.enableComplexMapKeySerialization();
-//        gsonBuilderTrial.registerTypeAdapter();
+        gsonBuilderTrial.registerTypeAdapter();
 
-
-        gsonBuilderTrial.annotationWithserializedName();
-
+//        gsonBuilderTrial.annotationWithSerializedName();
+//        gsonBuilderTrial.annotationWithJsonAdapter();
 
 //        gsonBuilderTrial.writer();
 //        gsonBuilderTrial.reader();
 
+    }
 
+    private void annotationWithJsonAdapter() {
+
+        Circle circle = new Circle(new Point(2f,2f), 1f);
+
+        Gson gson = new GsonBuilder().create();
+        String dataJson = gson.toJson(circle);
+        System.out.println("dataJson = " + dataJson);
+
+        circle = gson.fromJson(dataJson, Circle.class);
+        System.out.println(circle);
 
     }
 
-    private void annotationWithserializedName() {
+    private void annotationWithSerializedName() {
 
         Cat cat = new Cat("Tom", 2);
         Gson gson = new GsonBuilder().create();
@@ -120,36 +129,55 @@ public class GsonBuilderTrial {
 
     private void registerTypeAdapter() {
 
-        Point point = new Point(1.2f, 2.3f);
+
+        TypeAdapter<Point> pointTypeAdapter = new TypeAdapter<>() {
+            @Override
+            public void write(JsonWriter out, Point value) throws IOException {
+                System.out.println("~~TypeAdapter.write~~");
+                out.value("Point(" + value.x + "," + value.y + ")");
+            }
+
+            @Override
+            public Point read(JsonReader in) throws IOException {
+                System.out.println("~~TypeAdapter.read~~");
+
+                String json = in.nextString();
+                System.out.println(json);
+
+                String[] parts = json.substring(6, json.length() - 1).split(",");
+                float x = Float.valueOf(parts[0]);
+                float y = Float.valueOf(parts[1]);
+                return new Point(x, y);
+            }
+        };
+
+        //方式一：使用普通适配器（自己处理null值）
+//        Point point = new Point(1.2f, 2.3f);
+//        Gson gson = new GsonBuilder()
+//                .registerTypeAdapter(Point.class, pointTypeAdapter)
+//                .create();
+//        String dataJson = gson.toJson(point);
+//        System.out.println("dataJson = " + dataJson);
+//
+//        point = gson.fromJson(dataJson, Point.class);
+//        System.out.println("point = " + point);
+
+
+        //方式二：使用Null安全适配器（空值被偷偷丢弃后再传递给适配器）
+        Map<String, Point> pointMap = new HashMap<>();
+        pointMap.put("one", new Point(1.2f, 2.3f));
+        pointMap.put("two", null);
+        pointMap.put("three", new Point(1.2f, 2.3f));
 
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Point.class, new TypeAdapter<Point>() {
-                    @Override
-                    public void write(JsonWriter out, Point value) throws IOException {
-                        System.out.println("~~TypeAdapter.write~~");
-                        out.value("Point(" + value.x + "," + value.y + ")");
-                    }
-
-                    @Override
-                    public Point read(JsonReader in) throws IOException {
-                        System.out.println("~~TypeAdapter.read~~");
-
-                        String json = in.nextString();
-                        System.out.println(json);
-
-                        String[] parts = json.substring(6, json.length() - 1).split(",");
-                        float x = Float.valueOf(parts[0]);
-                        float y = Float.valueOf(parts[1]);
-                        return new Point(x, y);
-                    }
-                })
+                .registerTypeAdapter(Point.class, pointTypeAdapter.nullSafe())//null值将被偷偷丢弃，不会传递给适配器
                 .create();
-        String dataJson = gson.toJson(point);
+        String dataJson = gson.toJson(pointMap);
         System.out.println("dataJson = " + dataJson);
 
-        point = gson.fromJson(dataJson, Point.class);
+        dataJson = "";
+        Point point = gson.fromJson(dataJson, Point.class);
         System.out.println("point = " + point);
-
 
     }
 
@@ -331,5 +359,4 @@ public class GsonBuilderTrial {
         System.out.println(timestamp.getTime());
 
     }
-
 }

@@ -1,8 +1,7 @@
 import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import entity.ActorGson;
+import entity.Movie;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;

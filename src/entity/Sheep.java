@@ -1,3 +1,5 @@
+package entity;
+
 import com.google.gson.annotations.Expose;
 
 /**
@@ -18,7 +20,7 @@ public class Sheep {
 
     @Override
     public String toString() {
-        return "Sheep{" +
+        return "entity.Sheep{" +
                 "name='" + name + '\'' +
                 ", weight=" + weight +
                 ", age=" + age +

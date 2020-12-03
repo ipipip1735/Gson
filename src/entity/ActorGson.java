@@ -1,3 +1,5 @@
+package entity;
+
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class ActorGson {
 
     @Override
     public String toString() {
-        return "ActorGson{" +
+        return "entity.ActorGson{" +
                 "imdbId='" + imdbId + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", filmography=" + filmography +

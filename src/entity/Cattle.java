@@ -1,3 +1,5 @@
+package entity;
+
 import com.google.gson.annotations.Since;
 
 /**

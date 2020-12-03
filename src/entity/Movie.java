@@ -1,3 +1,5 @@
+package entity;
+
 import com.google.gson.annotations.Expose;
 
 import java.util.List;
@@ -23,7 +25,7 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{" +
+        return "entity.Movie{" +
                 "imdbId='" + imdbId + '\'' +
                 ", director='" + director + '\'' +
                 ", actors=" + actors +
