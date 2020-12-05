@@ -1,7 +1,12 @@
 import com.google.gson.*;
+import com.google.gson.internal.ObjectConstructor;
 import entity.ActorGson;
+import entity.Dog;
+import entity.Horse;
 import entity.Movie;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -29,13 +34,29 @@ public class Deserialization {
 
         deserialization.jsonToJavaWithInstanceCreator();//使用实例构建器
 
-
-
     }
 
     private void jsonToJavaWithInstanceCreator() {
 
 
+        InstanceCreator<Horse> horseInstanceCreator = new InstanceCreator<Horse>() {
+            @Override
+            public Horse createInstance(Type type) {
+                System.out.println("~~Deserialization.createInstance~~");
+                System.out.println("type = " + type);
+                return new Horse("Onyx", 2);
+            }
+        };
+
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Horse.class, horseInstanceCreator)
+                .create();
+
+//        String json = gson.toJson(new Horse("Opie", 2));
+//        System.out.println("json = " + json);
+
+        Horse horse = gson.fromJson("{\"name\":\"Opie\",\"age\":2}", Horse.class);
+        System.out.println("horse = " + horse);
 
     }
 
@@ -139,8 +160,6 @@ public class Deserialization {
 //        Arrays.stream(strings).forEach(System.out::println);
 
 
-
-
         //解析JSON二维数组
         double[][] coordinate = new double[2][3];
         Gson gson = new Gson();
@@ -169,7 +188,6 @@ public class Deserialization {
         Gson gson = new Gson();
         Map<String, Integer> map = gson.fromJson("{\"one\": 111, \"two\": 22, \"three\": 3}", Map.class);
         System.out.println(map);
-
 
 
     }
@@ -222,8 +240,6 @@ public class Deserialization {
         System.out.println(gson.fromJson("false", Boolean.class));
         System.out.println(gson.fromJson("\"abc\"", String.class));
     }
-
-
 
 
     private class DateGsonDeserializer implements JsonDeserializer<Date> {

@@ -230,7 +230,7 @@ public class GsonBuilderTrial {
 
     private void excludeFieldsWithModifiers() {
 
-        Dog dog = new Dog("Luck", 2);
+        Dog dog = new Dog("Odie", 2);
 
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithModifiers(Modifier.TRANSIENT)
