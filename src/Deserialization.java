@@ -1,5 +1,6 @@
 import com.google.gson.*;
 import com.google.gson.internal.ObjectConstructor;
+import com.google.gson.reflect.TypeToken;
 import entity.ActorGson;
 import entity.Dog;
 import entity.Horse;
@@ -32,7 +33,31 @@ public class Deserialization {
 //        deserialization.jsonToJavaWithDeserializer();//使用解析器
 //        deserialization.collectionTypeDeserializer();//使用解析器解析容器
 
-        deserialization.jsonToJavaWithInstanceCreator();//使用实例构建器
+//        deserialization.jsonToJavaWithInstanceCreator();//使用实例构建器
+
+        deserialization.genericJson();
+    }
+
+    private void genericJson() {
+
+        List<Horse> horses = new ArrayList<>();
+        horses.add(new Horse("one", 11));
+        horses.add(new Horse("two", 22));
+
+        Type horsesType = new TypeToken<List<Horse>>() {}.getType();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(horses, horsesType);
+        System.out.println("json = " + json);
+
+
+        horses = gson.fromJson(json, horsesType);
+        System.out.println(horses);
+        System.out.println(horses.get(0).name);
+
+
+
+
 
     }
 

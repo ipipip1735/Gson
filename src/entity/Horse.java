@@ -5,11 +5,11 @@ package entity;
  */
 public class Horse {
 
-    private String name;
-    private int age;
+    public String name;
+    public int age;
 
     public Horse(String name, int age) {
-        System.out.println("~~Horse.Horse2~~");
+        System.out.println("~~Horse.Horse~~");
         System.out.println("name = " + name + ", age = " + age);
         this.name = name;
         this.age = age;
