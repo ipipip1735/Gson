@@ -35,7 +35,51 @@ public class Deserialization {
 
 //        deserialization.jsonToJavaWithInstanceCreator();//使用实例构建器
 
-        deserialization.genericJson();
+//        deserialization.genericJson();//解析泛型
+
+
+//        deserialization.getFeile();//获取JSON对象字段
+        deserialization.getElement();//获取JSON数组元素
+    }
+
+    private void getElement() {
+
+        Gson gson = new Gson();
+
+        String json = gson.toJson(Arrays.asList("one", "two", "three"));
+        System.out.println("json = " + json);
+
+
+        JsonElement jsonElement = JsonParser.parseString(json);
+
+        json = jsonElement.getAsJsonArray().get(0).toString();
+        System.out.println("json = " + json);
+
+        System.out.println("s = " + gson.fromJson(json, String.class));
+
+    }
+
+    private void getFeile() {
+
+        Gson gson = new Gson();
+
+        String json = gson.toJson(new Horse("one", 11));
+        System.out.println("json = " + json);
+
+
+        JsonElement jsonElement = JsonParser.parseString(json);
+        json = jsonElement.getAsJsonObject().get("name").toString();
+        System.out.println("json = " + json);
+        String name = gson.fromJson(json, String.class);
+        System.out.println("name = " + name);
+
+        json = jsonElement.getAsJsonObject().get("age").toString();
+        System.out.println("json = " + json);
+        int age = gson.fromJson(json, int.class);
+        System.out.println("age = " + age);
+
+
+
     }
 
     private void genericJson() {
